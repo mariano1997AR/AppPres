@@ -22,7 +22,7 @@
     width: 150px;
     height: 150px;
     animation: spin 1s linear infinite;
-    background-image: url('C:/Users/manumiki/Documents/sistemaLogin/public/images/ApoloIX.png');
+    background-image: url('C:/Users/manumiki/Documents/sistemaLogin/src/assets/ApoloIX.png');
     background-size: contain;
   }
   
