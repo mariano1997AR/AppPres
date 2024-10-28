@@ -1,4 +1,3 @@
-import React from 'react'
 import { useAuth } from '../../hooks/useAuth.js'
 import { GeneratorPdf } from '../../components/GeneratorPDF/GeneradorPdf.jsx';
 

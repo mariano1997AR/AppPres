@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '../../hooks/useAuth.js'
 import { Loader } from '../Loader.jsx';
 import './Login.css';
@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 export const Login = () => {
-    const { loading, login,logout } = useAuth();
+    const { loading, login} = useAuth();
     const boxRef = useRef(null);
     const [code, setCode] = useState('');
 
@@ -34,7 +34,7 @@ export const Login = () => {
 
 
 
-    const handleLogin = (e) => {
+    const handleLogin = () => {
         login(code);
 
     };
