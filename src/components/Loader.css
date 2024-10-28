@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url('../assets/loader-fondo.jpg');
+    background-image: url('../../public/images/loader-fondo.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     position: fixed;
@@ -22,7 +22,7 @@
     width: 150px;
     height: 150px;
     animation: spin 1s linear infinite;
-    background-image: url('../assets/ApoloIX.png');
+    background-image: url('../../public/images/ApoloIX.png');
     background-size: contain;
   }
   
