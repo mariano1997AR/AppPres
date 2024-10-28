@@ -4,10 +4,6 @@ import { useNavigate } from 'react-router-dom';
 export function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [codeNew, setCodeNew] = useState('');
-  const [isCodeValid, setIsCodeValid] = useState(true); // Estado para la validez del código
-  const validationTimeout = 300000; // 5 minutos de validez del código
-
   const navigate = useNavigate();
 
   useEffect(() => {
