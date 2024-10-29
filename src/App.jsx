@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Route, Routes, Navigate, BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, HashRouter } from 'react-router-dom';
 import { Login } from './components/Login/Login';
 import { Dashboard } from './components/Login/Dashboard';
 import { ProtectedRoute } from './components/protectedRules/ProtectedRoute.jsx';
@@ -20,7 +20,7 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter basename='/AppPres'>
+    <HashRouter>
       {loading ? (
         <Loader></Loader>
       ) : (
@@ -40,7 +40,7 @@ function App() {
           </Routes>
         </Router>
       )}
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
