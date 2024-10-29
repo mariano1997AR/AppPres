@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Route, Routes, Navigate, HashRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { Login } from './components/Login/Login';
 import { Dashboard } from './components/Login/Dashboard';
 import { ProtectedRoute } from './components/protectedRules/ProtectedRoute.jsx';
@@ -21,7 +21,6 @@ function App() {
 
   return (
     <>
-     <HashRouter>
      {loading ? (
         <Loader></Loader>
       ) : (
@@ -43,8 +42,6 @@ function App() {
       )}
 
 
-
-     </HashRouter>
          
     </>
   )
