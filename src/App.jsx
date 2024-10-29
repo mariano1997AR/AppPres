@@ -35,7 +35,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/login" />} />
             <Route path='/obtenerApp' element={<ObtenerApp></ObtenerApp>} />
           </Routes>
         </Router>
