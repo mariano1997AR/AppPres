@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, HashRouter } from 'react-router-dom';
 import { Login } from './components/Login/Login';
 import { Dashboard } from './components/Login/Dashboard';
 import { ProtectedRoute } from './components/protectedRules/ProtectedRoute.jsx';
@@ -21,13 +21,13 @@ function App() {
 
   return (
     <>
-      {loading ? (
+     <HashRouter>
+     {loading ? (
         <Loader></Loader>
       ) : (
-                 <Router>
+        <Router>
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/login" element={<Login />} />
             <Route
               path="/dashboard"
               element={
@@ -36,11 +36,15 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="*" element={<Navigate to="/login" />} />
+            <Route path="*" element={<Navigate to="/" />} />
             <Route path='/obtenerApp' element={<ObtenerApp></ObtenerApp>} />
           </Routes>
         </Router>
       )}
+
+
+
+     </HashRouter>
          
     </>
   )
