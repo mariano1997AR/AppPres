@@ -26,7 +26,7 @@ function App() {
       ) : (
         <Router>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login />} />
             <Route
               path="/dashboard"
               element={
@@ -35,7 +35,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/login" />} />
             <Route path='/obtenerApp' element={<ObtenerApp></ObtenerApp>} />
           </Routes>
         </Router>
