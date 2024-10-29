@@ -13,7 +13,7 @@ export const ProtectedRoute = ({ children }) => {
 
     // Si el usuario no está autenticado, redirige al login
     if (!isAuthenticated) {
-        return <Navigate to="/" />;
+        return <Navigate to="/login" />;
     }
   // Si está autenticado, renderiza el contenido protegido
   return children;
