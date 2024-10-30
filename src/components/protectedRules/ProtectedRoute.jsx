@@ -1,4 +1,3 @@
-import { Navigate } from 'react-router-dom';
 import {useAuth} from '../../hooks/useAuth.js';
 import {Loader} from '../Loader.jsx';
 import { Login } from '../Login/Login.jsx';
