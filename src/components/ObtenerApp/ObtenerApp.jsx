@@ -22,7 +22,7 @@ export const ObtenerApp = () => {
                     </button>
                     <div className='collapse navbar-collapse' id='navbarNav'>
                         <ul className='navbar-nav'>
-                            <li className='nav-item'><Link to='/login' className='nav-link text-white'>Home</Link></li>
+                            <li className='nav-item'><Link to='/' className='nav-link text-white'>Home</Link></li>
                         </ul>
                         <ul className='navbar-nav'>
                             <li className='nav-item'><Link to='/obtenerApp' className='nav-link text-white'>Obtener App</Link></li>

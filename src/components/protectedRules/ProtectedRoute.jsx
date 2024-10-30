@@ -1,6 +1,8 @@
 import { Navigate } from 'react-router-dom';
 import {useAuth} from '../../hooks/useAuth.js';
 import {Loader} from '../Loader.jsx';
+import { Login } from '../Login/Login.jsx';
+
 
 // eslint-disable-next-line react/prop-types
 export const ProtectedRoute = ({ children }) => {
@@ -13,7 +15,7 @@ export const ProtectedRoute = ({ children }) => {
 
     // Si el usuario no está autenticado, redirige al login
     if (!isAuthenticated) {
-        return <Navigate to="/" />;
+        return <Login />;
     }
   // Si está autenticado, renderiza el contenido protegido
   return children;
