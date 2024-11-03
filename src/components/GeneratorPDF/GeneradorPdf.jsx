@@ -122,186 +122,304 @@ export const GeneratorPdf = () => {
     const doc = new jsPDF();
     const imgData = base64Image;
 
+     //titulo
+     let tituloPDF = formData.nomDoc;
+     // x =10 y y =10
+ 
+     //presentacion
+     const lista =
+     {
+       nombre: formData.nom_empresa,
+       responsabilidadSocial: formData.responsabilidadSocial,
+       cuil: formData.cuil,
+       email: formData.email
+     };
+ 
+ 
+     //cargar logo en el pdf
+     const crearLogoOrganizacion = (imgData) => {
+       doc.addImage(imgData, 'JPG', 2, 5, 50, 50);
+     }
+ 
+     //correr -> crearLogoOrganizacion
+     crearLogoOrganizacion(imgData);
+ 
+ 
+     let yPosListaPresentacion = 20;
+ 
+ 
+     //procesar el json de la presentacion
+     const procesarDatosPresentacion = (lista) => {
+       let xPosListaPresentacion = 70;
+       Object.entries(lista).forEach(([key, value]) => {
+         doc.setFontSize(13);
+         doc.text(`${key.toUpperCase()}: ${value.toUpperCase()}`, xPosListaPresentacion, yPosListaPresentacion);
+         yPosListaPresentacion += 7;
+       });
+ 
+     }
+ 
+     //correr -> procesar datos de la presentacion
+     procesarDatosPresentacion(lista);
+ 
+     let posSubtituloY = yPosListaPresentacion + 30;
+     //Subtitulo -> colocar nuestros servicios
+     const crearSubtituloServicios = () => {
+       let tamanioSubtitulo = 17;
+       let posSubtituloX = 2;
+       let subtitulo = `Nuestros servicios de ${selectedOptionProfesion}`;
+       doc.setFont('Helvetica', "bold");
+       doc.setFontSize(tamanioSubtitulo);
+       doc.text(subtitulo, posSubtituloX, posSubtituloY);
+     }
+ 
+     //correr -> CrearSubtituloServicios
+     crearSubtituloServicios();
+ 
+ 
+     let posServiciosY = posSubtituloY + 15;
+     //SERVICIOS
+ 
+     const crearServicios = (datosServicios) => {
+       let posServiciosX = 2;
+       datosServicios.map((dato) => {
+         doc.setFont('Helvetica', "normal");
+         doc.setFontSize(12);
+         doc.text(`${dato.toUpperCase()}`, posServiciosX, posServiciosY);
+         posServiciosY += 5;
+       });
+     }
+ 
+     //correr SERVICIOS
+     crearServicios(datosServicios);
+ 
+ 
+     //agregar un enlace
+     let yPosLink = posServiciosY + 20;
+     let yPosTituloLink = yPosLink;
+ 
+     //crear el input de enlace
+     const crearEnlace = () => {
+       let xPosLink = 75;
+       let xPosTituloLink = 2;
+       doc.setFont('Helvetica', "bold");
+       doc.setFontSize(12);
+       doc.text('Visitenos en nuestra pagina: '.toUpperCase(), xPosTituloLink, yPosTituloLink);
+       doc.textWithLink(formData.linkSitioWeb, xPosLink, yPosLink, { url: formData.linkSitioWeb });
+ 
+     }
+ 
+     //correr -> crear enlace
+     crearEnlace();
+ 
+ 
+     //crear la fecha   
+     // Obtener la fecha de hoy
+     //const hoy = new Date();
+     // Formatear la fecha como cadena
+     //const formattedDate = hoy.toLocaleDateString(); // Muestra la fecha en formato local
+     //et fecha = formattedDate;
+ 
+ 
+     //refactorizar esta parte del codigo 221-238
+     let yPosTituloDireccionLugar = yPosLink + 10;
+     //crear una etiquta para la direccion
+     const crearLabelDireccionLugar = ()=>{
+          //direccion del lugar
+         let tituloDireccionLugar = "Direccion: ".toUpperCase();
+         let xPosTituloDireccionLugar = 2;
+         doc.setFont('Helvetica', "bold");
+         doc.setFontSize(13);
+         doc.text(tituloDireccionLugar,xPosTituloDireccionLugar,yPosTituloDireccionLugar);
+     }
+ 
+     //correr -> crearLabelDireccionLugar
+     crearLabelDireccionLugar();
+ 
+ 
+     let yDireccionPos =  yPosTituloDireccionLugar;
+     //crear el input de la direccion del lugar dentro del documentos pdf
+     const crearInputDireccionLugar = ()=>{
+        let xDireccionPos = 30;
+        let direccion = formData.direccion;
+        doc.setFont('Helvetica', "normal");
+        doc.text(direccion, xDireccionPos, yDireccionPos);
+     }
+ 
+     //correr -> crearInputDireccionLugar
+     crearInputDireccionLugar();
+   
+   
+ 
+     let yPosTituloDiag = yDireccionPos + 10;
+     //Diagnostico -> etiqueta
+     const crearLabelDiagnostico = () => {
+       let tituloDiagnostico = "Diagnostico: ".toUpperCase();
+       let xPosTituloDiag = 2;
+       doc.text(tituloDiagnostico, xPosTituloDiag, yPosTituloDiag);
+     }
+     //correr la etiqueta del diagnostico
+     crearLabelDiagnostico();
+ 
+ 
+     let yposDiag = yPosTituloDiag + 10;
+     //escribir la informacion en el pdf
+     const crearInputDiagnostico = () => {
+       let diagnostico = formData.diagnostico;
+       let datos = [];
+       let xPostDiag = 2;
+       datos.push(diagnostico);
+       datos.map(dato => {
+         doc.setFont('Helvetica', "normal");
+         doc.setFontSize(12);
+         doc.text(`${dato.toUpperCase()}`, xPostDiag, yposDiag);
+         posServiciosY += 7;
+       });
+     }
+     //correr -> crearDatoDiagnostico
+     crearInputDiagnostico();
+ 
+ 
+     let yPostTituloTareas = yposDiag + 5;
+     //etiqueta de tareas a realizar
+ 
+     const crearLabelTareasArealizar = () => {
+       let tituloTareas = 'Tareas por Realizar'.toUpperCase();
+       let xPosTituloTareas = 2;
+       doc.setFont('Helvetica', 'bold');
+       doc.text(tituloTareas, xPosTituloTareas, yPostTituloTareas);
+     }
+ 
+     //corre -> crearLabelTareasArealizar 
+     crearLabelTareasArealizar();
+ 
+ 
+ 
+     let yPosItems = yposDiag + 10;
+     //crear las tareas del input y escribirlas en el pdf
+     const crearInputTareasArealizar = () => {
+       let xPosItems = 2;
+       datosTareas.map(dato => {
+         doc.setFont('Helvetica', 'normal')
+         doc.setFontSize(12);
+         doc.text(`• ${dato}`, xPosItems, yPosItems);
+         yPosItems += 7;
+       })
+ 
+     }
+ 
+     //correr -> crearTareasArealizar 
+     crearInputTareasArealizar();
+ 
+ 
+ 
+     let yTituloMateriales = yPosItems + 10;
+     //crear la etiqueta de materiales a utilizar
+     const crearLabelMateriasAutilizar = () => {
+       let tituloMateriales = "Materiales a utilizar".toUpperCase();
+       let xTituloMateriales = 2;
+       doc.setFont('Helvetica', "bold");
+       doc.text(tituloMateriales, xTituloMateriales, yTituloMateriales);
+     }
+ 
+     //correr -> crearLabelMateriasAutilizar 
+     crearLabelMateriasAutilizar();
+ 
+ 
+ 
+     let yPostMateriales = yTituloMateriales + 10;
+     //crear los materiales del input y procesarlos en el pdf a crear
+     const crearInputMaterialesAutilizar = (datosMateriales) => {
+       let xPostMateriales = 2;
+       datosMateriales.map((dato) => {
+         doc.setFont('Helvetica', 'normal');
+         doc.text(`• ${dato}`, xPostMateriales, yPostMateriales);
+         yPostMateriales += 7;
+       });
+ 
+     }
+ 
+     //correr -> crearMaterialesAutilizar
+     crearInputMaterialesAutilizar(datosMateriales);
+ 
+ 
+ 
+     let yPosTituloManoObra = yPostMateriales + 10;
+     //crear etiqueta de mano de obra
+     const crearLabelManoDeObra = () => {
+       let tituloManoObra = 'Mano de obra: $ ';
+       let xPosTituloManoObra = 2;
+       doc.text(tituloManoObra, xPosTituloManoObra, yPosTituloManoObra);
+     }
+ 
+     //correr -> crearLabelManoDeObra
+     crearLabelManoDeObra();
+ 
+ 
+ 
+ 
+     let yPosValorManoObra = yPosTituloManoObra;
+     //crear el input que contiene el valor de mano de obra y escribirlo en el pdf
+     const crearInputManoDeObra = () => {
+       let valorManoObra = formData.valorManoObra.toString();
+       let xPosValorManoObra = 34;
+       doc.text(valorManoObra, xPosValorManoObra, yPosValorManoObra);
+     }
+ 
+     //correr -> crearIinputManoDeObra
+     crearInputManoDeObra();
+ 
+ 
+ 
+     let yPosValorTituloMateriales = yPosTituloManoObra + 10;
+     //crear etiqueta de materiales
+     const crearEtiquetaMateriales = () => {
+       let valorTituloMateriales = 'Materiales: $ ';
+       let xPosValorTituloMateriales = 2;
+       doc.text(valorTituloMateriales, xPosValorTituloMateriales, yPosValorTituloMateriales);
+     }
+ 
+     //correr -> crearEtiquetaMateriales
+     crearEtiquetaMateriales();
+ 
+ 
+     //crear input del valor de los materiales ingresados y escribirlos en el pdf a crear
+     const crearInputValorMateriales = () => {
+       let valorMateriales = formData.valorMateriales.toString();
+       let xPosValorMateriales = 28;
+       let yPosValorMateriales = yPosValorTituloMateriales;
+       doc.text(valorMateriales, xPosValorMateriales, yPosValorMateriales);
+     }
+ 
+     //correr -> crearInputValorMateriales 
+     crearInputValorMateriales();
+ 
+ 
+ 
+     let yPostFirmaTitulo = yPosValorTituloMateriales + 5;
+     let yPostFirmaDigital = yPosValorTituloMateriales + 5;
+     //Crear etiqueta de firma en el pdf
+     const crearEtiquetaFirmaFinal = () => {
+       let firmaDigital = formData.firma.toString();
+       let tituloFirma = "Firma: ";
+       let xPostFirmaTitulo = 150;
+       let xPostFirmaDigital = 170;
+ 
+       //Titulo de firma
+       doc.text(tituloFirma, xPostFirmaTitulo, yPostFirmaTitulo);
+       // Configurar la fuente
+       doc.text(firmaDigital, xPostFirmaDigital, yPostFirmaDigital);
+     }
+ 
+     //correr -> crearEtiquetaFirmaFinal
+     crearEtiquetaFirmaFinal();
+ 
+ 
+ 
+ 
+     doc.save(tituloPDF);
 
-    //titulo
-    let tituloPDF = formData.nomDoc;
-    // x =10 y y =10
 
-    //presentacion
-    const lista =
-    {
-      nombre: formData.nom_empresa,
-      responsabilidadSocial: formData.responsabilidadSocial,
-      cuil: formData.cuil,
-      email: formData.email
-    };
-
-    let yPosListaPresentacion = 30;
-    let xPosListaPresentacion = 70;
-
-    //cargar logo
-    doc.addImage(imgData, 'JPG', 2, 5, 50, 50);
-
-    //procesar el json de la presentacion
-    Object.entries(lista).forEach(([key, value]) => {
-      doc.setFontSize(13);
-      doc.text(`${key.toUpperCase()}: ${value.toUpperCase()}`, xPosListaPresentacion, yPosListaPresentacion);
-      yPosListaPresentacion += 5;
-    });
-
-    //Subtitulo -> colocar nuestros servicios
-    let tamanioSubtitulo = 17;
-    let posSubtituloX = 2;
-    let posSubtituloY = yPosListaPresentacion + 10;
-    let subtitulo = `Nuestros servicios de ${selectedOptionProfesion}`;
-    doc.setFont('Helvetica', "bold");
-    doc.setFontSize(tamanioSubtitulo);
-    doc.text(subtitulo, posSubtituloX, posSubtituloY);
-
-    //SERVICIOS
-    let posServiciosX = 2;
-    let posServiciosY = posSubtituloY + 7;
-    datosServicios.map((dato) => {
-      doc.setFont('Helvetica', "normal");
-      doc.setFontSize(12);
-      doc.text(`${dato.toUpperCase()}`, posServiciosX, posServiciosY);
-      posServiciosY += 5;
-    });
-
-    //agregar un enlace
-    let xPosLink = 75;
-    let yPosLink = posServiciosY + 5;
-    let xPosTituloLink = 2;
-    let yPosTituloLink = posServiciosY + 5;
-
-    doc.setFont('Helvetica', "bold");
-    doc.setFontSize(12);
-
-
-    doc.text('Visitenos en nuestra pagina: '.toUpperCase(), xPosTituloLink, yPosTituloLink);
-    doc.textWithLink(formData.linkSitioWeb, xPosLink, yPosLink, { url: formData.linkSitioWeb });
-
-
-    //direccion del lugar
-    let direccion = formData.direccion;
-    // Obtener la fecha de hoy
-    const hoy = new Date();
-    // Formatear la fecha como cadena
-    const formattedDate = hoy.toLocaleDateString(); // Muestra la fecha en formato local
-    let fecha = formattedDate;
-
-    doc.setFont('Helvetica', "bold");
-    doc.setFontSize(13);
-    let xDireccionPos = 2;
-    let yDireccionPos = yPosLink + 5;
-    let xFechaPos = 2;
-    let yFechaPos = yPosLink + 10;
-    doc.text(direccion, xDireccionPos, yDireccionPos);
-    doc.text(fecha, xFechaPos, yFechaPos);
-
-
-    //Diagnostico
-    let tituloDiagnostico = "Diagnostico: ".toUpperCase();
-    let xPosTituloDiag = 2;
-    let yPosTituloDiag = yFechaPos + 7;
-    doc.text(tituloDiagnostico, xPosTituloDiag, yPosTituloDiag);
-
-    let diagnostico = formData.diagnostico;
-    let datos = [];
-    let xPostDiag = 2;
-    let yposDiag = yPosTituloDiag + 7;
-    datos.push(diagnostico);
-    datos.map(dato => {
-      doc.setFont('Helvetica', "normal");
-      doc.setFontSize(12);
-      doc.text(`${dato.toUpperCase()}`, xPostDiag, yposDiag);
-      posServiciosY += 5;
-    });
-
-    //tareas por realizar
-    let tituloTareas = 'Tareas por Realizar'.toUpperCase();
-    let xPosTituloTareas = 2;
-    let yPostTituloTareas = yposDiag + 6;
-    doc.setFont('Helvetica', 'bold');
-    doc.text(tituloTareas, xPosTituloTareas, yPostTituloTareas);
-
-    //especificacion de tareas
-    let xPosItems = 2;
-    let yPosItems = yposDiag + 12;
-    datosTareas.map(dato => {
-      doc.setFont('Helvetica', 'normal')
-      doc.setFontSize(12);
-      doc.text(`• ${dato}`, xPosItems, yPosItems);
-      yPosItems += 5;
-    })
-
-
-    //Materiales a utilizar
-    let tituloMateriales = "Materiales a utilizar".toUpperCase();
-    let xTituloMateriales = 2;
-    let yTituloMateriales = yPosItems + 4;
-    doc.setFont('Helvetica', "bold");
-    doc.text(tituloMateriales, xTituloMateriales, yTituloMateriales);
-
-
-    let xPostMateriales = 2;
-    let yPostMateriales = yTituloMateriales + 5;
-    datosMateriales.map((dato) =>{
-      doc.setFont('Helvetica', 'normal');
-      doc.text(`• ${dato}`, xPostMateriales, yPostMateriales);
-      yPostMateriales += 5;
-    });
-  
-
-    //mano de obra
-
-    let tituloManoObra = 'Mano de obra: $';
-    let xPosTituloManoObra = 2;
-    let yPosTituloManoObra = yPostMateriales + 6;
-    doc.text(tituloManoObra, xPosTituloManoObra, yPosTituloManoObra);
-
-    //valor de mano de obra
-    let valorManoObra = formData.valorManoObra.toString();
-    let xPosValorManoObra = 32;
-    let yPosValorManoObra = yPosTituloManoObra;
-    doc.text(valorManoObra, xPosValorManoObra, yPosValorManoObra);
-
-    //titulo valor de materiales
-    let valorTituloMateriales = 'Materiales: $';
-    let xPosValorTituloMateriales = 2;
-    let yPosValorTituloMateriales = yPosTituloManoObra + 6;
-    doc.text(valorTituloMateriales, xPosValorTituloMateriales, yPosValorTituloMateriales);
-
-    //valor de los materiales
-    let valorMateriales = formData.valorMateriales.toString();
-    let xPosValorMateriales = 26;
-    let yPosValorMateriales = yPosValorTituloMateriales;
-    doc.text(valorMateriales, xPosValorMateriales, yPosValorMateriales);
-
-
-
-    //generar firma digital
-    let firmaDigital = formData.firma.toString();
-    let tituloFirma = "Firma: ";
-    let xPostFirmaTitulo = 140;
-    let yPostFirmaTitulo = yPosValorTituloMateriales + 5;
-    let xPostFirmaDigital = 158;
-    let yPostFirmaDigital = yPosValorTituloMateriales + 5;
-
-    //Titulo de firma
-    doc.text(tituloFirma, xPostFirmaTitulo, yPostFirmaTitulo);
-
-    // Configurar la fuente
-    doc.text(firmaDigital, xPostFirmaDigital, yPostFirmaDigital);
-
-
-
-    //doc.text('Reporte pdf',10,10);
-    //doc.text('Este es un ejemplo de pdf en react',10,20);
-
-
-
-    doc.save(tituloPDF);
   }
 
 
