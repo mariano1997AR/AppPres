@@ -1,8 +1,9 @@
-# React + Vite
+# Aplicacion de presupuesto
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Es una aplicacion que se buscar crear presupuesto y proyectos para personas realicen trabajos por cuenta propia. 
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+Pagina de la empresa desarrolladora:
+
+- [Linkedln](https://www.linkedin.com/company/103266915/admin/dashboard/) 
