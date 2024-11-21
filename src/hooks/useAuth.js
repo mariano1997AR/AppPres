@@ -30,7 +30,7 @@ export function useAuth() {
 
   //funcion de inicio de sesion con redireccion
   const login = (code) => {;
-    if (code === '$2b$10$niLItdulwcHmjc1vfoctauC0E28LMJEPiNgx4vSDh9M3CLiZ/6902') {
+    if (code === 'adminmariano') {
       enviarCode(code);
       localStorage.setItem('token', 'fake-jwt-token');
       setIsAuthenticated(true);

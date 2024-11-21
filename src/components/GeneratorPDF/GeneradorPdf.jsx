@@ -430,7 +430,7 @@ export const GeneratorPdf = () => {
        <h2>Generador de pdf</h2>
        <input type="file" accept="image/*" onChange={handleImageUpload} />
        <button onClick={generatePDF}>{nombre}</button>*/}
-      <div className='container'>
+      <div className='container mb-5'>
         <form onSubmit={handleSubmit}>
           <Form.Group controlId="formFile" className="mb-3">
             <Form.Label>Ingrese el logo de tu empresa</Form.Label>

@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url('C:/Users/manumiki/Documents/sistemaLogin/src/assets/loader-fondo.jpg');
+    background-image: url('../assets/loader-fondo.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     position: fixed;
@@ -22,7 +22,7 @@
     width: 150px;
     height: 150px;
     animation: spin 1s linear infinite;
-    background-image: url('C:/Users/manumiki/Documents/sistemaLogin/src/assets/ApoloIX.png');
+    background-image: url('../assets/logo-page-linkedlnArreglado.png');
     background-size: contain;
   }
   
