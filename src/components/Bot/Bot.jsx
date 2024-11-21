@@ -12,7 +12,7 @@ export const Bot = () => {
   
       try {
         // Enviar datos al backend
-        const response = await fetch('http://127.0.0.1:5000/api/submitdata', {
+        const response = await fetch('http://127.0.0.1:10000/api/submitdata', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
