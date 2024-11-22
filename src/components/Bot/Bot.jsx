@@ -4,43 +4,36 @@ import './Bot.css';
 
 
 export const Bot = () => {
+    const [nombre, setNombre] = useState('');  // Estado para capturar el valor del input
+    const [email, setEmail] = useState('');
     const [mensaje, setMensaje] = useState('');
-    const [respuesta, setRespuesta] = useState(null);
+
   
     const handleSubmit = async (e) => {
       e.preventDefault(); // Evitar recarga de la página
   
+      e.preventDefault();  // Evitar que la página se recargue al enviar el formulario
+
+      // Crear un objeto con los datos del formulario
+      const datos = {
+          nombre: nombre,
+          email: email
+      };
+
       try {
-        // Enviar datos al backend
-        const response = await fetch('http://127.0.0.1:10000/api/submitdata', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ accion: mensaje }),
-        });
-  
-        if (!response.ok) {
-          throw new Error('Error en la respuesta del servidor.');
-        }
-  
-        if (mensaje === 'crear') {
-          // Descargar el archivo PDF
-          const blob = await response.blob();
-          const url = window.URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'documento.pdf'); // Nombre del archivo
-          document.body.appendChild(link);
-          link.click();
-          link.parentNode.removeChild(link);
-        } else {
-          // Mostrar el mensaje recibido
-          const data = await response.json();
-          setRespuesta(data.mensaje); // Mostrar el mensaje en pantalla
-        }
+          // Enviar los datos al backend Flask usando fetch
+          const response = await fetch('https://servidorrocket01.onrender.com/api/submitdata', {
+              method: 'POST',  // El método POST para enviar datos
+              headers: {
+                  'Content-Type': 'application/json'  // Indicamos que el contenido es JSON
+              },
+              body: JSON.stringify(datos)  // Convertir los datos del formulario a JSON
+          });
+
+          const data = await response.json();  // Convertir la respuesta a JSON
+          setMensaje(data.message)
       } catch (error) {
-        console.error('Error:', error);
+          console.error('Error al enviar datos:', error);
       }
     };
   return (
@@ -50,43 +43,27 @@ export const Bot = () => {
                <img src={rocketAT} alt="foto del bot" />
            </div>
            <div className='flex-item-right'>
-              <p>
-                <h3>Instrucciones</h3>
-                <ol>
-                   <li>Saludar</li>
-                   <li>Crear un documento</li>
-                   <li>Crear un ticket</li>
-                 </ol>
-              </p>
-              <form onSubmit={handleSubmit}>
-        <label>
-          <input
-            type="text"
-            value={mensaje}
-            onChange={(e) => setMensaje(e.target.value)}
-            style={{ margin: '10px', padding: '5px', width: '100%' }}
-            required
-          />
-        </label>
-        <button
-          type="submit"
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#007bff',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-          }}
-        >
-          Enviar
-        </button>
-      </form>
-      {respuesta && (
-        <div style={{ marginTop: '20px', color: 'green' }}>
-          <strong>Respuesta:</strong> {respuesta}
-        </div>
-      )}
+           <h2>Formulario de Contacto</h2>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>Nombre:</label>
+                    <input
+                        type="text"
+                        value={nombre}
+                        onChange={(e) => setNombre(e.target.value)}  // Actualizar el estado cuando el usuario escribe
+                    />
+                </div>
+                <div>
+                    <label>Email:</label>
+                    <input
+                        type="text"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}  // Actualizar el estado cuando el usuario escribe
+                    />
+                </div>
+                <button type="submit">Enviar</button>
+                {mensaje && <p>{mensaje}</p>}  {/* Mostrar el mensaje del backend */}
+            </form>
             </div>
         </div>
     </>
